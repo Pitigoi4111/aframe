@@ -7,6 +7,23 @@
     <script src="../../../dist/aframe-master.min.js"></script>
     <script src="https://unpkg.com/aframe-event-set-component@5.x.x/dist/aframe-event-set-component.min.js"></script>
   </head>
+  <script>
+  AFRAME.registerComponent('joystick-rotate', {
+    tick: function () {
+      var gp = navigator.getGamepads?.()[0];
+      if (!gp || !gp.axes) return;
+
+      var x = gp.axes[2];  // joystick stânga-dreapta
+
+      var el = document.querySelector('#my-sphere');
+      if (!el) return;
+
+      var rot = el.getAttribute('rotation');
+      rot.y += x * 2;
+      el.setAttribute('rotation', rot);
+    }
+  });
+</script>
   <body>
     <a-scene renderer="colorManagement: true;" xr-mode-ui="XRMode: xr">
       <a-assets>
